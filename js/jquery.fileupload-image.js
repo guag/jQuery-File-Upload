@@ -247,6 +247,11 @@
                                     );
                                 }
                             }
+                            // Store the pre-compression size in case
+-                           // we want to compare file size differences
+                            if (!blob.originalSize) {
+                                blob.originalSize = file.size;
+                            }
                             // Don't restore invalid meta data:
                             if (file.type !== blob.type) {
                                 delete data.imageHead;
@@ -291,6 +296,7 @@
                         this._blobSlice.call(file, 20)
                     ], {type: file.type});
                 blob.name = file.name;
+                blob.originalSize = file.originalSize;
                 data.files[data.index] = blob;
                 return data;
             },
